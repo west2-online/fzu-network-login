@@ -84,14 +84,14 @@ def logout(userindex):
     response_json, error = parse_response_json(response)
 
     if error:
-        print(f"登出失败，尝试解析 JSON 遇到错误: {error}")
+        print(f"Logout device fail, parse JSON meet error: {error}")
         return False
 
     if response_json.get('result') == 'success':
-        print("登出设备成功！")
+        print("Logout device successful.")
         return True
     else:
-        print(f"登出失败，消息: {response_json.get('message', 'Unknown error occurred.')}")
+        print(f"Logout device failed, msg: {response_json.get('message', 'Unknown error occurred.')}")
         return False
 
 # fail = 获取用户信息失败，用户可能已经下线
@@ -107,7 +107,7 @@ def check_online():
     response_json, error = parse_response_json(response)
 
     if error:
-        print(f"尝试解析 JSON 遇到错误: {error}")
+        print(f"Parse JSON meet error: {error}")
         print(f"Response content: {response.content.decode('utf-8')}")
         return "error", None
 
@@ -120,12 +120,12 @@ def check_online():
     usermac = response_json.get('userMac', '未知') # 用户MAC，e.g. 5ce35ef1b708
 
     # 美化打印输出
-    print(f"状态消息: {message}")
-    print(f"用户名: {username}")
-    print(f"用户ID: {userid}")
-    print(f"用户IP: {userip}")
-    print(f"用户MAC: {usermac}")
-    print(f"设备ID: {userindex}\n")
+    print(f"Status Message: {message}")
+    print(f"Username: {username}")
+    print(f"User ID: {userid}")
+    print(f"User IP: {userip}")
+    print(f"USer MAC: {usermac}")
+    print(f"Device ID: {userindex}\n")
 
     return result, userindex
 
