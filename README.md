@@ -79,7 +79,7 @@ graph TD
 ### 创建 Service
 
 ```
-sudo vim /etc/systemd/system/fzu_network_login.service`
+sudo vim /etc/systemd/system/fzu_network_login.service
 ```
 
 写入如下配置，请注意 ExecStart 需要和你的 python 路径一致
@@ -102,7 +102,7 @@ ExecStart=/usr/bin/python3 /path/to/your/script.py
 Timer 负责定时调用 Service
 
 ```
-sudo vim /etc/systemd/system/fzu_network_login.timer`
+sudo vim /etc/systemd/system/fzu_network_login.timer
 ```
 
 写入如下配置
