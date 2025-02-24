@@ -82,9 +82,9 @@ def logout(userindex: str) -> bool:
     }
     data = {"userIndex": userindex}
     response = requests.post(logout_url, headers=headers, data=data)
-    response_json, error = parse_response_json(response)
-
-    if error:
+    try:
+        response_json = parse_response_json(response)
+    except Exception as error:
         print(f"Logout device fail, parse JSON meet error: {error}")
         return False
 
