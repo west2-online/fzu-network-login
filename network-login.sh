@@ -28,12 +28,12 @@ parse_response_json() {
 # 登出
 logout() {
     local userindex=$1
-    local logout_url='http://59.77.227.227/eportal/InterFace.do?method=logout'
+    local logout_url='http://172.16.0.46/eportal/InterFace.do?method=logout'
     local response=$(curl -s -X POST -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" \
         -H "User-Agent: $user_agent" \
         -H "Connection: keep-alive" \
         -H "Accept: */*" \
-        -H "Origin: http://59.77.227.227" \
+        -H "Origin: http://172.16.0.46" \
         -H "DNT: 1" \
         -H "Accept-Encoding: gzip, deflate" \
         -H "Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6" \
@@ -58,7 +58,7 @@ logout() {
 
 # 检查在线状态
 check_online() {
-    local url='http://59.77.227.227/eportal/InterFace.do?method=getOnlineUserInfo'
+    local url='http://172.16.0.46/eportal/InterFace.do?method=getOnlineUserInfo'
     local response=$(curl -s -X POST -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" \
         --data-urlencode "userIndex=" \
         "$url")
@@ -98,14 +98,14 @@ get_page_info() {
     local encoded_query_string=$2
     local JSESSIONID=$3
 
-    local url='http://59.77.227.227/eportal/InterFace.do?method=pageInfo'
+    local url='http://172.16.0.46/eportal/InterFace.do?method=pageInfo'
     local response=$(curl -s -X POST \
-        -H "Host: 59.77.227.227" \
+        -H "Host: 172.16.0.46" \
         -H "Connection: keep-alive" \
         -H "User-Agent: $user_agent" \
         -H "DNT: 1" \
         -H "Accept: */*" \
-        -H "Origin: http://59.77.227.227" \
+        -H "Origin: http://172.16.0.46" \
         -H "Referer: $referer_url" \
         -H "Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6" \
         -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" \
@@ -136,17 +136,17 @@ login() {
 
     get_page_info $redirect_url $encoded_query_string $JSESSIONID
 
-    local login_url='http://59.77.227.227/eportal/InterFace.do?method=login'
+    local login_url='http://172.16.0.46/eportal/InterFace.do?method=login'
     local response=$(curl -s -X POST -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" \
         -H "Referer: $redirect_url" \
         -H "Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6" \
         -H "Accept-Encoding: gzip, deflate" \
-        -H "Origin: http://59.77.227.227" \
+        -H "Origin: http://172.16.0.46" \
         -H "DNT: 1" \
         -H "Accept: */*" \
         -H "User-Agent: $user_agent" \
         -H "Connection: keep-alive" \
-        -H "Host: 59.77.227.227" \
+        -H "Host: 172.16.0.46" \
         --data-urlencode "userId=$username" \
         --data-urlencode "password=$password" \
         --data-urlencode "queryString=$encoded_query_string" \
