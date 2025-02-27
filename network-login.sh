@@ -7,6 +7,18 @@ password=''
 max_retries=3 # 超时重试次数
 config_file='config.yaml'
 
+# 检查依赖
+check_dependencies() {
+    local dependencies=("jq" "yq" "sed" "curl" "awk")
+    for dep in "${dependencies[@]}"; do
+        if ! command -v "$dep" &> /dev/null; then
+            echo "Error: $dep is not installed."
+            return 1
+        fi
+    done
+    return 0
+}
+
 # 读取配置文件
 read_config() {
     if [[ -f "$config_file" ]]; then
@@ -19,8 +31,8 @@ read_config() {
 # 解析 JSON 响应
 parse_response_json() {
     # 使用 jq 解析 JSON
-    if ! echo "$1" | jq . > /dev/null 2>&1; then
-        echo "Error parsing JSON."
+    if ! err=$(echo "$1" | jq . 2>&1 > /dev/null); then
+        echo "Error parsing JSON: $err"
         return 1
     fi
 }
@@ -176,6 +188,11 @@ login() {
 
 # 主函数
 main() {
+    check_dependencies
+    if [[ $? -ne 0 ]]; then
+        echo "Dependencies check failed. Exiting."
+        exit 1
+    fi
     # 读取配置文件
     read_config
 
