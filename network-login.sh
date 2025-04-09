@@ -141,7 +141,7 @@ login() {
     JSESSIONID=$(awk '/JSESSIONID/ {print $7}' cookies.txt)
 
     # 解析重定向 URL 以获取查询字符串
-    query_string=$(echo "$redirect_url" | sed -n 's/.*\?\(.*\)/\1/p')
+    query_string=$(echo "$redirect_url" | cut -d'?' -f2-)
 
     # 使用jq对查询字符串进行URL编码
     encoded_query_string=$(echo "$query_string" | jq -sRr @uri)
