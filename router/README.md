@@ -53,7 +53,7 @@
 * 查看日志输出，确认登录是否成功：
 
   ```bash
-  /etc/fzu-router-login.sh >> /tmpfzu-login.log 2>&1
+  /etc/fzu-router-login.sh >> /tmp/fzu-login.log 2>&1
   tail -n 200 /tmp/fzu-login.log
   ```
 * 若提示 `Already online. Exiting.`，表示已经登录成功。
@@ -65,7 +65,7 @@
 * 脚本需放置在 `/etc/` 或其他可执行目录下，并赋予执行权限：
 
   ```bash
-  chmod +x /etc/*.sh
+  chmod +x /etc/fzu-router-login.sh
   ```
 * 请确保路由器已正确配置 WAN 接口（能获取校园网分配的 IP/MAC）。
 
