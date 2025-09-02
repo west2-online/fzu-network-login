@@ -36,8 +36,9 @@ Already online. No need to login.
 > 可以通过`which` 命令查询是否已经安装指定软件
 > 建议通过虚拟环境管理 python 包
 
-
 > 在 python 环境良好的情况下，推荐使用 python 脚本运行及设定自动化流程
+
+> 对于没有上述环境的小米路由器等基于 OpenWrt 系统的路由器，见[这里](/router/README.md)
 
 ## QuickStart
 
