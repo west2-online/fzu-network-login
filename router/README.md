@@ -30,7 +30,7 @@
 
 ## 在 OpenWrt 上使用
 
-由于 OpenWrt 没有 `systemd`，请使用 `crontab` 来周期性执行 `fzu-network-login.sh`：
+由于 OpenWrt 没有 `systemd`，请使用 `crontab` 来周期性执行 `fzu-router-login.sh`：
 
 1. 编辑定时任务（一般为vim编辑器，自行学习相关操作）：
    ```bash
@@ -40,7 +40,7 @@
 2. 添加以下内容（每 30 分钟执行一次）：
 
    ```cron
-   */30 * * * * /bin/sh /etc/fzu-network-login.sh
+   */30 * * * * /bin/sh /etc/fzu-router-login.sh
    ```
 3. 保存并重启 cron：
 
@@ -94,6 +94,6 @@
     ```sh
     curl -o /etc/fzu-router-login.sh http:/{本机局域网ip}:8000/fzu-router-login.sh
     chmod +x /etc/fzu-router-login.sh
-    curl -o /etc/fzu-login.conf http://{本局域网ip}:8000/fzu-login.conf
+    curl -o /etc/fzu-login.conf http://{本机局域网ip}:8000/fzu-login.conf
     chmod 600 /etc/fzu-login.conf
     ```
