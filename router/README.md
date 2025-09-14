@@ -37,10 +37,13 @@
    crontab -e
     ````
 
-2. 添加以下内容（每 30 分钟执行一次）：
+2. 添加以下内容（每 30 分钟执行一次，有无日志二选一）：
 
    ```cron
+   # 无日志
    */30 * * * * /bin/sh /etc/fzu-router-login.sh
+   # 有日志
+   */30 * * * * /bin/sh /etc/fzu-router-login.sh >> /tmp/fzu-login.log 2>&1
    ```
 3. 保存并重启 cron：
 
@@ -53,7 +56,9 @@
 * 查看日志输出，确认登录是否成功：
 
   ```bash
+  # 首次使用
   /etc/fzu-router-login.sh >> /tmp/fzu-login.log 2>&1
+  # 查看日志
   tail -n 200 /tmp/fzu-login.log
   ```
 * 若提示 `Already online. Exiting.`，表示已经登录成功。
