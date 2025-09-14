@@ -4,7 +4,7 @@
 
 ## 可用状态
 
-2025.4.9 确认可用
+2025.9.14 确认可用
 
 ```text
 ❯ python login.py
@@ -38,7 +38,7 @@ Already online. No need to login.
 
 > 在 python 环境良好的情况下，推荐使用 python 脚本运行及设定自动化流程
 
-> 对于没有上述环境的小米路由器等基于 OpenWrt 系统的路由器，见[这里](/router/README.md)
+> 对于没有上述环境的小米路由器等基于 OpenWrt 系统的路由器，见 [这里](/router/README.md)
 
 ## QuickStart
 
