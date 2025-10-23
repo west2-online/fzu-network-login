@@ -74,8 +74,10 @@ is_valid_json() {
 check_online() {
   url="http://${LOGIN_HOST}${GETONLINE_PATH}"
   resp=$(curl -s -X POST -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" --data-urlencode "userIndex=" "$url" 2>/dev/null)
+  curl_exit_code=$?
   if [ "$(is_valid_json "$resp")" != "yes" ]; then
     log "check_online: response not valid JSON"
+    log "raw: $resp (curl: $curl_exit_code)"
     return 3
   fi
 
@@ -128,8 +130,10 @@ logout() {
   userindex_arg="$1"
   url="http://${LOGIN_HOST}${LOGOUT_PATH}"
   resp=$(curl -s -X POST -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" -H "User-Agent: ${user_agent}" --data-urlencode "userIndex=${userindex_arg}" "$url" 2>/dev/null)
+  curl_exit_code=$?
   if [ "$(is_valid_json "$resp")" != "yes" ]; then
     log "Logout: invalid JSON response"
+    log "raw: $resp (curl: $curl_exit_code)"
     return 1
   fi
   result=$(extract_json_field "$resp" "result")
@@ -202,9 +206,10 @@ login() {
     --data-urlencode "operatorPwd=" \
     --data-urlencode "service=" \
     "$url" 2>/dev/null)
-
+  curl_exit_code=$?
   if [ "$(is_valid_json "$resp")" != "yes" ]; then
     log "Login failed: not valid JSON response."
+    log "raw: $resp (curl: $curl_exit_code)"
     return 1
   fi
 
