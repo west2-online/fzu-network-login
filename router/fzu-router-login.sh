@@ -9,6 +9,7 @@
 CONFIG_FILE="/etc/fzu-login.conf"
 USER_AGENT_DEFAULT=""
 MAX_RETRIES=3
+TIME_OUT=20
 CHECK_URL="http://www.gstatic.com/generate_204"
 
 LOGIN_HOST="172.16.0.46"
@@ -73,7 +74,7 @@ is_valid_json() {
 # ---------- Portal functions ----------
 check_online() {
   url="http://${LOGIN_HOST}${GETONLINE_PATH}"
-  resp=$(curl -s -X POST -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" --data-urlencode "userIndex=" "$url" 2>/dev/null)
+  resp=$(curl -s --connect-timeout $TIME_OUT -X POST -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" --data-urlencode "userIndex=" "$url" 2>/dev/null)
   curl_exit_code=$?
   if [ "$(is_valid_json "$resp")" != "yes" ]; then
     log "check_online: response not valid JSON"
@@ -109,7 +110,7 @@ get_page_info() {
   encoded_query_string="$2"
   JSESSIONID="$3"
   url="http://${LOGIN_HOST}${PAGEINFO_PATH}"
-  _resp=$(curl -s -X POST \
+  _resp=$(curl -s --connect-timeout $TIME_OUT -X POST \
     -H "Host: ${LOGIN_HOST}" \
     -H "Connection: keep-alive" \
     -H "User-Agent: ${user_agent}" \
@@ -129,7 +130,7 @@ get_page_info() {
 logout() {
   userindex_arg="$1"
   url="http://${LOGIN_HOST}${LOGOUT_PATH}"
-  resp=$(curl -s -X POST -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" -H "User-Agent: ${user_agent}" --data-urlencode "userIndex=${userindex_arg}" "$url" 2>/dev/null)
+  resp=$(curl -s --connect-timeout $TIME_OUT -X POST -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" -H "User-Agent: ${user_agent}" --data-urlencode "userIndex=${userindex_arg}" "$url" 2>/dev/null)
   curl_exit_code=$?
   if [ "$(is_valid_json "$resp")" != "yes" ]; then
     log "Logout: invalid JSON response"
@@ -149,7 +150,7 @@ logout() {
 
 discover_login_page() {
   log "Discovering captive portal using $CHECK_URL ..."
-  final_url=$(curl -s -L -o /dev/null -w '%{url_effective}' "$CHECK_URL" 2>/dev/null)
+  final_url=$(curl -s --connect-timeout $TIME_OUT -L -o /dev/null -w '%{url_effective}' "$CHECK_URL" 2>/dev/null)
   log "Detected portal final URL: $final_url"
   printf "%s" "$final_url"
 }
@@ -185,7 +186,7 @@ login() {
 
   # login POST
   url="http://${LOGIN_HOST}${LOGIN_PATH}"
-  resp=$(curl -s -X POST \
+  resp=$(curl -s --connect-timeout $TIME_OUT -X POST \
     -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" \
     -H "Referer: ${redirect_url}" \
     -H "Accept-Language: zh-CN,zh;q=0.9" \
